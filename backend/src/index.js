@@ -39,7 +39,7 @@ if (process.env.NODE_ENV === "production") {
 
   app.use(
     express.static(
-      path.join(__dirname, "frontend/dist")
+      path.join(__dirname, "../frontend/dist")
     )
   );
 
@@ -48,9 +48,7 @@ if (process.env.NODE_ENV === "production") {
     res.sendFile(
       path.join(
         __dirname,
-        "frontend",
-        "dist",
-        "index.html"
+        "../frontend/dist/index.html"
       )
     );
   });
