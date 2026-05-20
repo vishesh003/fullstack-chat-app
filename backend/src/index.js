@@ -16,25 +16,37 @@ const PORT = process.env.PORT || 5001;
 
 const __dirname = path.resolve();
 
-app.use(express.json());
+// BODY PARSER LIMIT FIX
+app.use(express.json({
+  limit: "10mb",
+}));
 
+app.use(express.urlencoded({
+  extended: true,
+  limit: "10mb",
+}));
+
+// COOKIE PARSER
 app.use(cookieParser());
 
+// CORS
 app.use(
   cors({
     origin:
       process.env.NODE_ENV === "production"
         ? "https://fullstack-chat-app-1-g6i1.onrender.com"
         : "http://localhost:5173",
+
     credentials: true,
   })
 );
 
-// API routes
+// API ROUTES
 app.use("/api/auth", authRoutes);
+
 app.use("/api/messages", messageRoutes);
 
-// Production setup
+// PRODUCTION SETUP
 if (process.env.NODE_ENV === "production") {
 
   app.use(
@@ -54,7 +66,13 @@ if (process.env.NODE_ENV === "production") {
   });
 }
 
+// START SERVER
 server.listen(PORT, () => {
-  console.log("Server running on port:", PORT);
+
+  console.log(
+    "Server running on port:",
+    PORT
+  );
+
   connectDB();
 });
